@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Heart, ZoomIn, X, Check, Truck, ShieldCheck, RotateCcw, ChevronDown, Star, Glasses } from 'lucide-react';
 import FrameArt from './FrameArt';
+import ProductImage from './ProductImage';
 import { ShippingCalc } from './CartParts';
 import { Scroller } from './Shelf';
 import { WhatsappIcon } from './Social';
@@ -79,6 +80,12 @@ export default function ProductView({ product: p }: { product: Product }) {
   const soldOut = p.stock === 0;
   const related = products.filter((x) => x.id !== p.id && (x.category === p.category || x.collection === p.collection)).slice(0, 8);
 
+  // Galeria: fotos reais quando houver; senão, 3 ângulos ilustrados
+  const gallery = p.images?.length
+    ? p.images.map((_, k) => ({ id: `foto-${k}`, label: k === 0 ? 'Foto principal' : `Foto ${k + 1}`, render: (cls: string) => <ProductImage product={p} colorIndex={color} index={k} eager={k === 0} className={cls} /> }))
+    : views.map((v) => ({ id: v.id, label: v.label, render: (cls: string) => <FrameArt product={p} colorIndex={color} view={v.id} className={cls} /> }));
+  const current = gallery[Math.min(view, gallery.length - 1)];
+
   const buyNow = () => { add({ slug: p.slug, color }); openDrawer(false); router.push('/checkout'); };
   const lensHref = `/produto/${p.slug}/lentes?cor=${color}`;
 
@@ -98,9 +105,9 @@ export default function ProductView({ product: p }: { product: Product }) {
           <div className="lg:sticky lg:top-[calc(var(--header-height)+64px)] lg:self-start">
             <div className="flex flex-col-reverse gap-4 md:flex-row">
               <div className="flex gap-3 md:flex-col" role="tablist" aria-label="Fotos do produto">
-                {views.map((v, k) => (
-                  <button key={v.id} role="tab" aria-selected={view === k} aria-label={v.label} onClick={() => setView(k)} className={`h-20 w-20 flex-none overflow-hidden rounded-sm border-2 transition ${view === k ? 'border-secondary' : 'border-transparent opacity-70 hover:opacity-100'}`}>
-                    <FrameArt product={p} colorIndex={color} view={v.id} className="h-full w-full" />
+                {gallery.length > 1 && gallery.map((g, k) => (
+                  <button key={g.id} role="tab" aria-selected={view === k} aria-label={g.label} onClick={() => setView(k)} className={`h-20 w-20 flex-none overflow-hidden rounded-sm border-2 transition ${view === k ? 'border-secondary' : 'border-transparent opacity-70 hover:opacity-100'}`}>
+                    {g.render('h-full w-full')}
                   </button>
                 ))}
               </div>
@@ -112,9 +119,9 @@ export default function ProductView({ product: p }: { product: Product }) {
                 onClick={() => setZoom(true)}
               >
                 <div className="aspect-square transition-transform duration-[400ms] ease-veluzzi" style={{ transform: hoverZoom ? 'scale(1.8)' : 'none', transformOrigin: origin }}>
-                  <FrameArt product={p} colorIndex={color} view={views[view].id} className="h-full w-full" />
+                  {current.render('h-full w-full')}
                 </div>
-                <span className="pointer-events-none absolute bottom-3 left-3 rounded-xs bg-black/25 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur">Imagem provisória</span>
+                {!p.images?.length && <span className="pointer-events-none absolute bottom-3 left-3 rounded-xs bg-black/25 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur">Imagem provisória</span>}
                 <button onClick={(e) => { e.stopPropagation(); setZoom(true); }} aria-label="Ampliar imagem" className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-full bg-surface shadow-md"><ZoomIn size={18} /></button>
               </div>
             </div>
@@ -244,11 +251,11 @@ export default function ProductView({ product: p }: { product: Product }) {
             <button onClick={() => setZoom(false)} aria-label="Fechar" className="grid h-11 w-11 place-items-center"><X /></button>
           </div>
           <div className="flex-1 overflow-auto">
-            <FrameArt product={p} colorIndex={color} view={views[view].id} className="mx-auto h-auto w-[180%] max-w-none md:w-full md:max-w-5xl" />
+            {current.render('mx-auto aspect-square w-[180%] max-w-none md:w-full md:max-w-4xl')}
           </div>
           <div className="flex justify-center gap-3 p-4">
-            {views.map((v, k) => (
-              <button key={v.id} onClick={() => setView(k)} className={`chip ${view === k ? '!bg-secondary !text-white' : ''}`}>{view === k && <Check size={14} />}{v.label}</button>
+            {gallery.length > 1 && gallery.map((g, k) => (
+              <button key={g.id} onClick={() => setView(k)} className={`chip ${view === k ? '!bg-secondary !text-white' : ''}`}>{view === k && <Check size={14} />}{g.label}</button>
             ))}
           </div>
         </div>

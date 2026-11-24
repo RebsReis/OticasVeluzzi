@@ -1,24 +1,25 @@
 import type { Config } from 'tailwindcss';
 
-// Tokens do Design System Óticas Veluzzi — os valores vivem em app/globals.css (:root)
+// Tokens do Design System Óticas Veluzzi (espelham app/globals.css :root).
+// Cores em hexadecimal para permitir modificadores de opacidade do Tailwind (ex.: bg-ink/50).
 const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
   theme: {
     screens: { sm: '480px', md: '768px', lg: '1024px', xl: '1280px' },
     extend: {
       colors: {
-        primary: { DEFAULT: 'var(--color-primary)', hover: 'var(--color-primary-hover)', light: 'var(--color-primary-light)' },
-        secondary: { DEFAULT: 'var(--color-secondary)', dark: 'var(--color-secondary-dark)' },
-        background: 'var(--color-background)',
-        surface: 'var(--color-surface)',
-        ink: 'var(--color-text)',
-        accent: 'var(--color-accent)',
-        muted: 'var(--color-muted)',
-        line: 'var(--color-border)',
-        success: 'var(--color-success)',
-        warning: 'var(--color-warning)',
-        error: 'var(--color-error)',
-        info: 'var(--color-info)',
+        primary: { DEFAULT: '#D4AA3C', hover: '#C39A30', light: '#F4E8C5' },
+        secondary: { DEFAULT: '#4E5146', dark: '#36392F' },
+        background: '#F7F6F2',
+        surface: '#FFFFFF',
+        ink: '#20221E',
+        accent: '#B89A65',
+        muted: '#777B70',
+        line: '#E2E3DD',
+        success: '#38734C',
+        warning: '#956300',
+        error: '#B83C3C',
+        info: '#426B8A',
       },
       fontFamily: { heading: 'var(--font-heading)', body: 'var(--font-body)' },
       fontSize: {

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Check, Lock, QrCode, CreditCard, FileText, Store, Truck, Pencil, PackageCheck } from 'lucide-react';
-import FrameArt from '@/components/FrameArt';
+import ProductImage from '@/components/ProductImage';
 import { LensSummary } from '@/components/CartParts';
 import { brl, getProduct, installments, storeSettings } from '@/lib/data';
 import { cartTotals, itemUnitPrice, useHydrated, useStore } from '@/lib/store';
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
                 const p = getProduct(i.slug)!;
                 return (
                   <li key={i.key} className="flex gap-3 py-3">
-                    <span className="relative h-16 w-16 flex-none overflow-hidden rounded-sm"><FrameArt product={p} colorIndex={i.color} className="h-full w-full" /><span className="absolute right-0.5 top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-secondary px-1 text-[11px] font-bold text-white">{i.qty}</span></span>
+                    <span className="relative h-16 w-16 flex-none overflow-hidden rounded-sm"><ProductImage product={p} colorIndex={i.color} className="h-full w-full" /><span className="absolute right-0.5 top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-secondary px-1 text-[11px] font-bold text-white">{i.qty}</span></span>
                     <span className="min-w-0 flex-1 text-sm"><b className="block truncate">{p.name}</b><span className="text-xs text-muted">{p.colors[i.color].name}</span><LensSummary item={i} /></span>
                     <b className="text-sm">{brl(itemUnitPrice(i) * i.qty)}</b>
                   </li>

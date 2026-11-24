@@ -3,7 +3,9 @@
 **Fase 1 — protótipo visual navegável.** Feito em Next.js 15, React 19, TypeScript, Tailwind CSS, GSAP e Lucide, seguindo o Design System *Premium Optical Editorial*.
 
 > ⚠️ Todos os produtos, preços, coleções e condições comerciais são **dados demonstrativos** (`lib/data.ts`).
-> As imagens de produto são ilustrações SVG provisórias e serão substituídas pelas fotografias reais.
+> Produtos com fotografia usam `images[]` em `lib/data.ts` (arquivos em `public/products/`); os demais exibem uma ilustração SVG provisória.
+> As fotos recebem `mix-blend-multiply` sobre o tom areia do Design System — envie fotos com fundo branco para o melhor resultado.
+> Antes de publicar, confirme os direitos de uso das fotos de campanha (`public/campaign/`) e que as marcas visíveis nos produtos são revendidas pela Veluzzi.
 
 ## Como rodar
 

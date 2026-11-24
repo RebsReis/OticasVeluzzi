@@ -7,9 +7,9 @@ import { getProduct } from '@/lib/data';
 
 /** Banners do hero — na Fase 2 vêm do painel (Marketing → Banners da homepage). */
 const slides = [
-  { eyebrow: 'Uma nova perspectiva', title: 'Elegância em cada olhar.', text: 'Encontre os óculos que traduzem sua personalidade e transforme sua maneira de enxergar o mundo.', primary: { label: 'Comprar agora', href: '/categoria/todos' }, secondary: { label: 'Explorar coleções', href: '/categoria/marcas' }, product: 'giulia', color: 0, tone: 'olive' as const },
-  { eyebrow: 'Coleção Solar', title: 'A luz do dia, do seu jeito.', text: 'Proteção UV400 e desenho editorial para acompanhar cada passeio.', primary: { label: 'Ver óculos de sol', href: '/categoria/oculos-de-sol' }, secondary: { label: 'Lançamentos', href: '/categoria/lancamentos' }, product: 'riviera', color: 0, tone: 'olive' as const },
-  { eyebrow: 'Lentes sob medida', title: 'Seu grau, sua armação.', text: 'Escolha a armação, personalize lentes e tratamentos e envie sua receita online.', primary: { label: 'Montar meus óculos', href: '/categoria/lentes' }, secondary: { label: 'Falar com especialista', href: '#atendimento' }, product: 'lorenzo', color: 0, tone: 'olive' as const },
+  { eyebrow: 'Uma nova perspectiva', title: 'Elegância em cada olhar.', text: 'Encontre os óculos que traduzem sua personalidade e transforme sua maneira de enxergar o mundo.', primary: { label: 'Comprar agora', href: '/categoria/todos' }, secondary: { label: 'Explorar coleções', href: '/categoria/marcas' }, product: 'giulia', color: 0, tone: 'olive' as const, image: '/campaign/hero-tartaruga.webp', position: '50% 40%' },
+  { eyebrow: 'Coleção Solar', title: 'A luz do dia, do seu jeito.', text: 'Proteção UV400 e desenho editorial para acompanhar cada passeio.', primary: { label: 'Ver óculos de sol', href: '/categoria/oculos-de-sol' }, secondary: { label: 'Lançamentos', href: '/categoria/lancamentos' }, product: 'riviera', color: 0, tone: 'olive' as const, image: '/campaign/hero-solar.webp', position: '50% 30%' },
+  { eyebrow: 'Lentes sob medida', title: 'Seu grau, sua armação.', text: 'Escolha a armação, personalize lentes e tratamentos e envie sua receita online.', primary: { label: 'Montar meus óculos', href: '/categoria/lentes' }, secondary: { label: 'Falar com especialista', href: '#atendimento' }, product: 'lorenzo', color: 0, tone: 'olive' as const, image: undefined as string | undefined, position: '' },
 ];
 
 export function Hero() {
@@ -47,7 +47,11 @@ export function Hero() {
           </div>
         </div>
         <div className="relative order-1 aspect-[4/3.4] md:order-2 md:aspect-auto">
-          <EditorialScene key={i} product={product} colorIndex={s.color} tone={s.tone} className="absolute inset-0 animate-[fadeIn_.9s_cubic-bezier(.22,1,.36,1)]" />
+          {s.image ? (
+            <img key={i} src={s.image} alt="" className="absolute inset-0 h-full w-full animate-[fadeIn_.9s_cubic-bezier(.22,1,.36,1)] object-cover" style={{ objectPosition: s.position }} fetchPriority={i === 0 ? 'high' : 'auto'} />
+          ) : (
+            <EditorialScene key={i} product={product} colorIndex={s.color} tone={s.tone} className="absolute inset-0 animate-[fadeIn_.9s_cubic-bezier(.22,1,.36,1)]" />
+          )}
         </div>
       </div>
     </section>

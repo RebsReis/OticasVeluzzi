@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Heart, ShoppingBag } from 'lucide-react';
 import FrameArt from './FrameArt';
+import ProductImage from './ProductImage';
 import { brl, discountPct, finalPrice, installments, type Product } from '@/lib/data';
 import { useHydrated, useStore } from '@/lib/store';
 
@@ -22,9 +23,13 @@ export default function ProductCard({ product, priority = false }: { product: Pr
     <article className="group relative flex h-full flex-col" data-reveal={priority ? undefined : ''}>
       <div className="relative overflow-hidden rounded-md bg-line/40">
         <Link href={href} className="block aspect-[4/5]" aria-label={`${product.name}, ${product.collection}`}>
-          <FrameArt product={product} colorIndex={color} className="absolute inset-0 h-full w-full transition-transform duration-[400ms] ease-veluzzi group-hover:scale-[1.04]" />
+          <ProductImage product={product} colorIndex={color} eager={priority} className="absolute inset-0 h-full w-full transition-transform duration-[400ms] ease-veluzzi group-hover:scale-[1.04]" />
           {/* segunda fotografia ao passar o mouse */}
-          <FrameArt product={product} colorIndex={color} view="detail" className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-[400ms] ease-veluzzi group-hover:opacity-100 max-md:hidden" title={`${product.name} — detalhe`} />
+          {(product.images?.length ?? 0) > 1 ? (
+            <ProductImage product={product} colorIndex={color} index={1} className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-[400ms] ease-veluzzi group-hover:opacity-100 max-md:hidden" />
+          ) : !product.images?.length ? (
+            <FrameArt product={product} colorIndex={color} view="detail" className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-[400ms] ease-veluzzi group-hover:opacity-100 max-md:hidden" title={`${product.name} — detalhe`} />
+          ) : null}
         </Link>
 
         <div className="pointer-events-none absolute left-3 top-3 flex flex-col gap-1.5">

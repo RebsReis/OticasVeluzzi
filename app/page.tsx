@@ -3,7 +3,7 @@ import { ShieldCheck, CreditCard, Headset, Truck, BadgeCheck, ArrowRight, Star, 
 import { Hero, Newsletter } from '@/components/HomeClient';
 import { TabbedShelf, Scroller } from '@/components/Shelf';
 import { EditorialScene } from '@/components/Editorial';
-import FrameArt from '@/components/FrameArt';
+import ProductImage from '@/components/ProductImage';
 import { WhatsappIcon } from '@/components/Social';
 import { collections, getProduct, products } from '@/lib/data';
 
@@ -16,12 +16,12 @@ const benefits = [
 ];
 
 const categories = [
-  { label: 'Óculos de grau', href: '/categoria/oculos-de-grau', product: 'classic-black' },
-  { label: 'Óculos de sol', href: '/categoria/oculos-de-sol', product: 'urban-brown' },
-  { label: 'Feminino', href: '/categoria/feminino', product: 'giulia' },
-  { label: 'Masculino', href: '/categoria/masculino', product: 'enzo' },
+  { label: 'Óculos de grau', href: '/categoria/oculos-de-grau', product: 'giulia' },
+  { label: 'Óculos de sol', href: '/categoria/oculos-de-sol', product: 'capri' },
+  { label: 'Feminino', href: '/categoria/feminino', product: 'bianca' },
+  { label: 'Masculino', href: '/categoria/masculino', product: 'milano' },
   { label: 'Infantil', href: '/categoria/infantil', product: 'theo' },
-  { label: 'Lentes', href: '/categoria/lentes', product: 'aurora' },
+  { label: 'Lentes', href: '/categoria/lentes', product: 'classic-black' },
 ];
 
 const by = (fn: (a: (typeof products)[number], b: (typeof products)[number]) => number) => [...products].sort(fn);
@@ -66,12 +66,14 @@ export default function Home() {
             const p = getProduct(c.product)!;
             return (
               <li key={c.label} data-reveal className={k < 2 ? 'lg:col-span-6' : 'lg:col-span-3'}>
-                <Link href={c.href} className="group relative block overflow-hidden rounded-xl">
-                  <div className={`${k < 2 ? 'aspect-[4/5] lg:aspect-[16/10]' : 'aspect-[4/5]'} transition-transform duration-[400ms] ease-veluzzi group-hover:scale-[1.04]`}>
-                    {k < 2 ? <EditorialScene product={p} tone={k === 0 ? 'sand' : 'stone'} className="h-full w-full" label={false} /> : <FrameArt product={p} className="h-full w-full" />}
+                <Link href={c.href} className="group block">
+                  <div className="overflow-hidden rounded-xl">
+                    <div className={`${k < 2 ? 'aspect-square lg:aspect-[16/10]' : 'aspect-square'} transition-transform duration-[400ms] ease-veluzzi group-hover:scale-[1.04]`}>
+                      <ProductImage product={p} className="h-full w-full" />
+                    </div>
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 bg-gradient-to-t from-ink/80 via-ink/35 to-transparent p-4 pt-20 text-white md:p-6">
-                    <span className={`font-heading leading-tight ${k < 2 ? 'text-h4 md:text-h3' : 'text-[20px]'}`}>{c.label}</span>
+                  <div className="flex items-center justify-between gap-2 pt-3 md:pt-4">
+                    <span className={`font-heading leading-tight ${k < 2 ? 'text-[22px] md:text-h3' : 'text-[20px]'}`}>{c.label}</span>
                     <span className="grid h-9 w-9 flex-none place-items-center rounded-full bg-primary text-ink transition-transform duration-300 group-hover:translate-x-1"><ArrowRight size={16} /></span>
                   </div>
                 </Link>

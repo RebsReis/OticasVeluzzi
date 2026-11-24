@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Heart, Menu, Search, ShoppingBag, User, X, ChevronRight, ChevronDown, MapPin, CreditCard, Truck, Headset, Lock } from 'lucide-react';
 import { menu, products, storeSettings, brl, finalPrice, type MenuCategory } from '@/lib/data';
 import { cartTotals, useHydrated, useStore } from '@/lib/store';
-import FrameArt from './FrameArt';
+import ProductImage from './ProductImage';
 import { WhatsappIcon } from './Social';
 
 const topIcons = [Truck, CreditCard, CreditCard, Headset];
@@ -86,7 +86,7 @@ function SearchBox({ onDone, autoFocus = false }: { onDone?: () => void; autoFoc
               {results.map((p) => (
                 <li key={p.id}>
                   <Link href={`/produto/${p.slug}`} onClick={() => { setOpen(false); onDone?.(); }} className="flex items-center gap-3 px-4 py-2.5 hover:bg-background">
-                    <span className="h-12 w-12 flex-none overflow-hidden rounded-sm"><FrameArt product={p} className="h-full w-full" /></span>
+                    <span className="h-12 w-12 flex-none overflow-hidden rounded-sm"><ProductImage product={p} className="h-full w-full" /></span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate font-semibold">{p.name}</span>
                       <span className="block truncate text-xs text-muted">{p.collection}</span>
@@ -125,7 +125,7 @@ function MegaPanel({ cat, onClose }: { cat: MenuCategory; onClose: () => void })
           </div>
         </div>
         <Link href={cat.promo?.href ?? `/categoria/${cat.slug}`} onClick={onClose} className="group relative block overflow-hidden rounded-md">
-          <FrameArt product={featured} className="aspect-[4/3] w-full transition-transform duration-[400ms] ease-veluzzi group-hover:scale-[1.04]" />
+          <ProductImage product={featured} className="aspect-[4/3] w-full transition-transform duration-[400ms] ease-veluzzi group-hover:scale-[1.04]" />
           <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-5 pt-12 font-heading text-[20px] leading-tight text-white">{cat.promo?.title ?? cat.label}</span>
         </Link>
       </div>

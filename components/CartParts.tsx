@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Minus, Plus, Trash2, X, ShoppingBag, Check } from 'lucide-react';
-import FrameArt from './FrameArt';
+import ProductImage from './ProductImage';
 import { brl, getProduct, lensTypes, storeSettings, treatments, products, finalPrice } from '@/lib/data';
 import { cartTotals, itemUnitPrice, useHydrated, useStore, type CartItem, demoCoupons } from '@/lib/store';
 
@@ -29,7 +29,7 @@ export function CartLine({ item, compact = false }: { item: CartItem; compact?: 
   return (
     <li className="flex gap-4 py-5">
       <Link href={`/produto/${p.slug}`} className={`flex-none overflow-hidden rounded-sm ${compact ? 'h-24 w-20' : 'h-32 w-28'}`}>
-        <FrameArt product={p} colorIndex={item.color} className="h-full w-full" />
+        <ProductImage product={p} colorIndex={item.color} className="h-full w-full" />
       </Link>
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-2">
@@ -170,7 +170,7 @@ export function CartDrawer() {
                   <ul className="space-y-3">
                     {suggestions.map((p) => (
                       <li key={p.id} className="flex items-center gap-3">
-                        <span className="h-14 w-14 flex-none overflow-hidden rounded-sm"><FrameArt product={p} className="h-full w-full" /></span>
+                        <span className="h-14 w-14 flex-none overflow-hidden rounded-sm"><ProductImage product={p} className="h-full w-full" /></span>
                         <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold">{p.name}</span><span className="text-sm text-muted">{brl(finalPrice(p))}</span></span>
                         <button onClick={() => add({ slug: p.slug, color: 0 })} className="btn btn-outline !min-h-[40px] !px-4 !text-xs">Adicionar</button>
                       </li>

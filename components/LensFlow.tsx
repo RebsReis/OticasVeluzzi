@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check, ChevronLeft, Upload, FileText, Headset, Clock, PenLine, ShieldCheck, Lock } from 'lucide-react';
-import FrameArt from './FrameArt';
+import ProductImage from './ProductImage';
 import { brl, finalPrice, installments, lensTypes, treatments, type Product } from '@/lib/data';
 import { lensPrice, useStore, type LensConfig } from '@/lib/store';
 
@@ -124,7 +124,7 @@ export default function LensFlow({ product: p }: { product: Product }) {
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {p.colors.map((c, k) => (
                   <button key={c.name} role="radio" aria-checked={color === k} onClick={() => setColor(k)} className={`overflow-hidden rounded-md border bg-surface text-left transition ${color === k ? 'border-secondary ring-1 ring-secondary' : 'border-line'}`}>
-                    <FrameArt product={p} colorIndex={k} className="aspect-[4/3] w-full" />
+                    <ProductImage product={p} colorIndex={k} className="aspect-[4/3] w-full" />
                     <span className="flex items-center justify-between p-4 font-semibold">{c.name}{color === k && <Check size={18} className="text-secondary" />}</span>
                   </button>
                 ))}
@@ -218,7 +218,7 @@ export default function LensFlow({ product: p }: { product: Product }) {
             <section>
               <h2 className="text-h4">Confira seus óculos</h2>
               <div className="mt-6 overflow-hidden rounded-md border border-line bg-surface">
-                <FrameArt product={p} colorIndex={color} className="aspect-[16/9] w-full" />
+                <ProductImage product={p} colorIndex={color} className="aspect-[16/9] w-full" />
                 <dl className="divide-y divide-line text-sm">
                   <div className="flex justify-between p-4"><dt>Armação {p.name} · {p.colors[color].name}</dt><dd className="font-semibold">{brl(finalPrice(p))}</dd></div>
                   <div className="flex justify-between p-4"><dt>Lente: {type.name}</dt><dd className="font-semibold">{type.price ? brl(type.price) : 'Incluso'}</dd></div>
@@ -239,7 +239,7 @@ export default function LensFlow({ product: p }: { product: Product }) {
         {/* Resumo em tempo real */}
         <aside className="hidden lg:block">
           <div className="sticky top-[calc(var(--header-height)+80px)] rounded-xl bg-surface p-[var(--card-padding)] shadow-md">
-            <FrameArt product={p} colorIndex={color} className="aspect-[4/3] w-full rounded-sm" />
+            <ProductImage product={p} colorIndex={color} className="aspect-[4/3] w-full rounded-sm" />
             <p className="eyebrow mt-5">{p.collection}</p>
             <p className="font-heading text-[24px]">{p.name}</p>
             <ul className="mt-4 space-y-2 border-t border-line pt-4 text-sm">
