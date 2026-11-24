@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   title: { default: 'Óticas Veluzzi — Elegância em cada olhar', template: '%s | Óticas Veluzzi' },
   description: 'Óculos de grau, óculos de sol, lentes e acessórios com atendimento especializado. Compre online com segurança.',
   openGraph: { title: 'Óticas Veluzzi', description: 'Elegância em cada olhar.', locale: 'pt_BR', type: 'website' },
+  // Protótipo de apresentação: fora dos buscadores até a aprovação
+  robots: process.env.NEXT_PUBLIC_ALLOW_INDEX === '1' ? undefined : { index: false, follow: false },
 };
 
 export const viewport: Viewport = { themeColor: '#4E5146', width: 'device-width', initialScale: 1 };
