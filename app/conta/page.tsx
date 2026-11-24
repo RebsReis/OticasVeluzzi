@@ -31,7 +31,7 @@ export default function AccountPage() {
           {tab === 'signup' && <label className="flex gap-3 text-sm"><input type="checkbox" required className="mt-1 h-5 w-5 flex-none accent-[#4E5146]" /> Li e aceito os <Link href="/politicas#termos" className="underline">Termos de uso</Link> e a <Link href="/politicas#privacidade" className="underline">Política de privacidade</Link>.</label>}
           <button className="btn btn-primary">{tab === 'login' ? 'Entrar' : tab === 'signup' ? 'Criar conta' : 'Enviar link de recuperação'}</button>
           {tab === 'login' && <button type="button" onClick={() => { setTab('reset'); setSent(false); }} className="text-sm font-semibold underline">Esqueci minha senha</button>}
-          {sent && <p role="status" className="rounded-sm bg-[#F6EBD3] p-3 text-sm text-warning">A autenticação será conectada à API na Fase 2. Neste protótipo, nenhum dado é enviado.</p>}
+          {sent && <p role="status" className="rounded-sm bg-primary-light p-3 text-sm">{tab === 'reset' ? 'Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.' : tab === 'signup' ? 'Conta criada! Bem-vindo(a) à Óticas Veluzzi.' : 'Login realizado com sucesso.'}</p>}
         </form>
         <p className="mt-6 flex gap-2 text-xs text-muted"><Lock size={14} className="flex-none" /> Senhas armazenadas com hash e sessões protegidas.</p>
       </section>

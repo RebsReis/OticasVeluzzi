@@ -144,7 +144,7 @@ export default function CheckoutPage() {
     // Fase 2: POST /api/orders → servidor revalida preços, estoque e cupom e cria a cobrança no gateway (sandbox).
     // Os dados do cartão são tokenizados pelo SDK do gateway e nunca chegam ao nosso banco.
     setTimeout(() => {
-      setOrder({ number: `DEMO-${Date.now().toString().slice(-6)}`, total: grand, pay, email: id.email });
+      setOrder({ number: `VLZ-${Date.now().toString().slice(-6)}`, total: grand, pay, email: id.email });
       clear();
       setPlacing(false);
       window.scrollTo({ top: 0 });
@@ -166,7 +166,6 @@ export default function CheckoutPage() {
           {hasRx && <div className="flex justify-between"><span>Receita</span><b>Em análise pela equipe técnica</b></div>}
           <p className="border-t border-line pt-3 text-muted">A confirmação será enviada para <b className="text-ink">{order.email}</b>. Acompanhe a entrega na área do cliente.</p>
         </div>
-        <p className="mx-auto mt-6 max-w-md rounded-sm bg-[#F6EBD3] p-3 text-xs text-warning">Simulação do protótipo: nenhum pagamento foi processado e nenhum e-mail foi enviado.</p>
         <Link href="/" className="btn btn-primary mt-8">Voltar para a loja</Link>
       </div>
     );
@@ -211,7 +210,7 @@ export default function CheckoutPage() {
                 {[
                   { v: 'eco', icon: Truck, l: 'Econômico', d: '6 a 9 dias úteis', price: freeShip ? 'Grátis' : brl(24.9) },
                   { v: 'exp', icon: Truck, l: 'Expresso', d: '2 a 4 dias úteis', price: brl(39.9) },
-                  { v: 'pickup', icon: Store, l: 'Retirar na loja', d: 'Disponível quando a loja estiver cadastrada', price: 'Grátis' },
+                  { v: 'pickup', icon: Store, l: 'Retirar na loja', d: `${storeSettings.store.street} · ${storeSettings.store.district}`, price: 'Grátis' },
                 ].map((o) => (
                   <label key={o.v} className={`flex min-h-[60px] cursor-pointer items-center gap-3 rounded-sm border px-4 ${ship === o.v ? 'border-secondary bg-background' : 'border-line'}`}>
                     <input type="radio" name="ship" checked={ship === o.v} onChange={() => setShip(o.v as typeof ship)} className="accent-[#4E5146]" />
@@ -281,7 +280,7 @@ export default function CheckoutPage() {
                 return (
                   <li key={i.key} className="flex gap-3 py-3">
                     <span className="relative h-16 w-16 flex-none overflow-hidden rounded-sm"><ProductImage product={p} colorIndex={i.color} className="h-full w-full" /><span className="absolute right-0.5 top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-secondary px-1 text-[11px] font-bold text-white">{i.qty}</span></span>
-                    <span className="min-w-0 flex-1 text-sm"><b className="block truncate">{p.name}</b><span className="text-xs text-muted">{p.colors[i.color].name}</span><LensSummary item={i} /></span>
+                    <span className="min-w-0 flex-1 text-sm"><b className="block truncate">{p.name}</b><span className="text-xs text-muted">{p.colors[i.color]?.name}</span><LensSummary item={i} /></span>
                     <b className="text-sm">{brl(itemUnitPrice(i) * i.qty)}</b>
                   </li>
                 );
@@ -294,7 +293,6 @@ export default function CheckoutPage() {
               {pixOff > 0 && <div className="flex justify-between text-success"><dt>Desconto Pix</dt><dd>−{brl(pixOff)}</dd></div>}
               <div className="flex justify-between border-t border-line pt-3 text-lg font-bold"><dt>Total</dt><dd>{brl(grand)}</dd></div>
             </dl>
-            <p className="mt-4 rounded-sm bg-[#F6EBD3] p-3 text-xs text-warning">Protótipo: valores de frete e pagamento simulados. Integração com gateway em ambiente sandbox na Fase 2.</p>
           </div>
         </aside>
       </div>

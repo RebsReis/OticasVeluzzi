@@ -8,7 +8,7 @@ import ProductImage from './ProductImage';
 import { ShippingCalc } from './CartParts';
 import { Scroller } from './Shelf';
 import { WhatsappIcon } from './Social';
-import { brl, discountPct, finalPrice, installments, products, storeSettings, type Product } from '@/lib/data';
+import { brl, discountPct, finalPrice, installments, products, storeSettings, waLink, type Product } from '@/lib/data';
 import { useHydrated, useStore } from '@/lib/store';
 
 const views = [
@@ -121,7 +121,6 @@ export default function ProductView({ product: p }: { product: Product }) {
                 <div className="aspect-square transition-transform duration-[400ms] ease-veluzzi" style={{ transform: hoverZoom ? 'scale(1.8)' : 'none', transformOrigin: origin }}>
                   {current.render('h-full w-full')}
                 </div>
-                {!p.images?.length && <span className="pointer-events-none absolute bottom-3 left-3 rounded-xs bg-black/25 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur">Imagem provisória</span>}
                 <button onClick={(e) => { e.stopPropagation(); setZoom(true); }} aria-label="Ampliar imagem" className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-full bg-surface shadow-md"><ZoomIn size={18} /></button>
               </div>
             </div>
@@ -188,7 +187,7 @@ export default function ProductView({ product: p }: { product: Product }) {
                   <button onClick={() => add({ slug: p.slug, color })} className="btn btn-outline w-full">Adicionar à sacola</button>
                 </>
               )}
-              <a href="/#atendimento" className="btn w-full !min-h-[48px] border border-line bg-surface hover:border-ink"><WhatsappIcon /> Tirar dúvidas no WhatsApp</a>
+              <a href={waLink(`Olá! Tenho interesse no modelo ${p.name} (${p.sku}) da Óticas Veluzzi.`)} target="_blank" rel="noopener noreferrer" className="btn w-full !min-h-[48px] border border-line bg-surface hover:border-ink"><WhatsappIcon /> Tirar dúvidas no WhatsApp</a>
             </div>
 
             <ul className="mt-8 grid gap-3 text-sm">

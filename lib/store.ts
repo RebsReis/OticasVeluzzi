@@ -75,6 +75,12 @@ export const useStore = create<State>()(
       name: 'veluzzi-cart',
       storage: createJSONStorage(() => localStorage),
       partialize: (s) => ({ items: s.items, favorites: s.favorites, coupon: s.coupon }),
+      // descarta itens salvos de produtos/cores que não existem mais no catálogo
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<State>;
+        const items = (p.items ?? []).filter((i) => { const prod = getProduct(i.slug); return !!prod && i.color < prod.colors.length; });
+        return { ...current, ...p, items };
+      },
     },
   ),
 );

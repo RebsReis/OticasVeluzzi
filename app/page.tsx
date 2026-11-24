@@ -2,10 +2,9 @@ import Link from 'next/link';
 import { ShieldCheck, CreditCard, Headset, Truck, BadgeCheck, ArrowRight, Star, Glasses, Eye, Sparkles } from 'lucide-react';
 import { Hero, Newsletter } from '@/components/HomeClient';
 import { TabbedShelf, Scroller } from '@/components/Shelf';
-import { EditorialScene } from '@/components/Editorial';
-import ProductImage from '@/components/ProductImage';
 import { WhatsappIcon } from '@/components/Social';
-import { collections, getProduct, products } from '@/lib/data';
+import { collections, getProduct, products, storeSettings, waLink } from '@/lib/data';
+import ProductImage from '@/components/ProductImage';
 
 const benefits = [
   { icon: ShieldCheck, title: 'Compra segura', text: 'Ambiente protegido e dados criptografados' },
@@ -19,7 +18,7 @@ const categories = [
   { label: 'Óculos de grau', href: '/categoria/oculos-de-grau', product: 'giulia' },
   { label: 'Óculos de sol', href: '/categoria/oculos-de-sol', product: 'capri' },
   { label: 'Feminino', href: '/categoria/feminino', product: 'bianca' },
-  { label: 'Masculino', href: '/categoria/masculino', product: 'milano' },
+  { label: 'Masculino', href: '/categoria/masculino', product: 'lorenzo' },
   { label: 'Infantil', href: '/categoria/infantil', product: 'theo' },
   { label: 'Lentes', href: '/categoria/lentes', product: 'classic-black' },
 ];
@@ -97,7 +96,7 @@ export default function Home() {
       {/* Editorial 1 — imagem à esquerda */}
       <section className="section container-v">
         <div className="grid items-center gap-10 md:grid-cols-2 md:gap-20">
-          <EditorialScene product={getProduct('helena')!} tone="sand" className="aspect-[4/5] rounded-xl" />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-xl"><img src="/campaign/hero-solar.webp" alt="Modelo usando óculos de sol de metal dourado" loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top" data-parallax /></div>
           <div data-reveal className="max-w-md">
             <p className="eyebrow">Coleção Solar</p>
             <h2 className="mt-3 text-h2">Formas que acompanham a luz.</h2>
@@ -126,7 +125,7 @@ export default function Home() {
             </ol>
             <Link href="/categoria/lentes" className="btn btn-primary mt-10">Montar meus óculos</Link>
           </div>
-          <EditorialScene product={getProduct('verona')!} tone="stone" className="order-1 aspect-[4/5] rounded-xl md:order-2" />
+          <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-xl md:order-2"><img src="/campaign/hero-tartaruga.webp" alt="Armação redonda em acetato tartaruga" loading="lazy" className="absolute inset-0 h-full w-full object-cover" /></div>
         </div>
       </section>
 
@@ -150,7 +149,6 @@ export default function Home() {
               <p className="eyebrow" data-reveal>Marcas e coleções</p>
               <h2 className="mt-3 text-h2" data-reveal>Do clássico ao contemporâneo.</h2>
             </div>
-            <span className="demo-tag">Coleções demonstrativas — cadastre as marcas reais no painel</span>
           </div>
           <ul className="grid grid-cols-2 gap-[var(--grid-gap)] md:grid-cols-5">
             {collections.map((c) => (
@@ -169,7 +167,7 @@ export default function Home() {
       <section id="sobre" className="section container-v">
         <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-20">
           <div className="relative">
-            <EditorialScene product={getProduct('dante')!} tone="olive" className="aspect-[4/5] rounded-xl" />
+            <ProductImage product={getProduct('dante')!} className="aspect-[4/5] overflow-hidden rounded-xl" />
             <div className="absolute -bottom-6 right-6 max-w-[220px] rounded-md bg-primary p-5 text-ink shadow-lg md:-right-8">
               <p className="font-heading text-[22px] leading-tight">Cuidado em cada detalhe.</p>
             </div>
@@ -186,7 +184,6 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-xs text-muted">Texto institucional provisório — revisar com a história real da empresa.</p>
           </div>
         </div>
       </section>
@@ -218,9 +215,39 @@ export default function Home() {
               <p className="mt-3 max-w-lg text-lg text-ink/75">Dúvidas sobre medidas, lentes ou sua receita? Fale com um especialista Veluzzi pelo WhatsApp.</p>
             </div>
             <div data-reveal className="md:justify-self-end">
-              <a href="#" className="btn bg-ink text-white hover:bg-secondary-dark" aria-describedby="wa-note"><WhatsappIcon /> Fale com um especialista</a>
-              <p id="wa-note" className="mt-2 text-xs text-ink/60">Número do WhatsApp a configurar no painel.</p>
+              <a href={waLink()} target="_blank" rel="noopener noreferrer" className="btn bg-ink text-white hover:bg-secondary-dark"><WhatsappIcon /> Fale com um especialista</a>
+              <p className="mt-2 text-center text-sm font-semibold text-ink/70 md:text-right">{storeSettings.phone}</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Loja física */}
+      <section id="loja" className="section border-t border-line bg-surface">
+        <div className="container-v grid gap-10 md:grid-cols-[1fr_1.3fr] md:items-center md:gap-16">
+          <div data-reveal>
+            <p className="eyebrow">Visite nossa loja</p>
+            <h2 className="mt-3 text-h2">Vila Matilde, São Paulo.</h2>
+            <p className="mt-4 text-lg text-muted">Experimente as armações pessoalmente e receba orientação de um especialista na escolha das lentes.</p>
+            <address className="mt-8 space-y-1 not-italic">
+              <p className="font-bold">{storeSettings.store.street}</p>
+              <p className="text-muted">{storeSettings.store.district} · {storeSettings.store.city} / {storeSettings.store.uf}</p>
+              <p className="pt-2"><a href={waLink()} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">WhatsApp {storeSettings.phone}</a></p>
+              <p><a href={storeSettings.instagram} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">{storeSettings.instagramHandle}</a></p>
+            </address>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href={storeSettings.store.mapsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Como chegar</a>
+              <a href={waLink('Olá! Gostaria de agendar um atendimento na Óticas Veluzzi.')} target="_blank" rel="noopener noreferrer" className="btn btn-outline">Agendar atendimento</a>
+            </div>
+          </div>
+          <div data-reveal className="overflow-hidden rounded-xl border border-line shadow-md">
+            <iframe
+              title="Mapa da Óticas Veluzzi na Vila Matilde"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(`${storeSettings.store.street}, ${storeSettings.store.district}, ${storeSettings.store.city} - ${storeSettings.store.uf}`)}&output=embed`}
+              className="aspect-[4/3] w-full grayscale-[35%]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>

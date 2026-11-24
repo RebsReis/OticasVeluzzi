@@ -10,7 +10,7 @@ export function EditorialScene({
   colorIndex = 0,
   tone = 'olive',
   className = '',
-  label = true,
+  label = false,
 }: {
   product: Product;
   colorIndex?: number;

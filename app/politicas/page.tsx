@@ -10,7 +10,6 @@ export default function Policies() {
   return (
     <div className="container-v max-w-3xl pb-[calc(var(--section-spacing)+var(--bottom-nav))] pt-12">
       <h1 className="text-h2">Políticas e termos</h1>
-      <p className="mt-4 rounded-sm bg-[#F6EBD3] p-4 text-sm text-warning">Os textos definitivos devem ser redigidos pela empresa (com apoio jurídico) e publicados pelo painel administrativo. Abaixo, o que cada documento deve cobrir.</p>
       {sections.map((s) => (
         <section key={s.id} id={s.id} className="mt-12 scroll-mt-40">
           <h2 className="text-h3">{s.t}</h2>

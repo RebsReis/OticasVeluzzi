@@ -34,7 +34,7 @@ export default function LensFlow({ product: p }: { product: Product }) {
   const router = useRouter();
   const add = useStore((s) => s.add);
   const [step, setStep] = useState(0);
-  const [color, setColor] = useState(Number(params.get('cor') ?? 0) || 0);
+  const [color, setColor] = useState(() => { const c = Number(params.get('cor') ?? 0) || 0; return c >= 0 && c < p.colors.length ? c : 0; });
   const [typeId, setTypeId] = useState<string>('simples');
   const [tr, setTr] = useState<string[]>(['ar']);
   const [rxMode, setRxMode] = useState<LensConfig['prescription']>('upload');
@@ -140,7 +140,6 @@ export default function LensFlow({ product: p }: { product: Product }) {
                   <Option key={t.id} selected={typeId === t.id} onClick={() => setTypeId(t.id)} title={t.name} desc={t.desc} price={t.price ? `+ ${brl(t.price)}` : 'Incluso'} />
                 ))}
               </div>
-              <p className="mt-4 text-sm text-muted">Outras opções de lente cadastradas pela ótica aparecerão aqui.</p>
             </section>
           )}
 
@@ -210,7 +209,7 @@ export default function LensFlow({ product: p }: { product: Product }) {
               {rxMode === 'later' && <p className="mt-6 rounded-md bg-surface p-5 text-sm">O pedido fica com o status <b>Aguardando receita</b> até o envio pela área do cliente. A produção começa após a conferência.</p>}
               {rxErr && <p className="mt-3 text-sm text-error" role="alert">{rxErr}</p>}
 
-              <p className="mt-6 flex gap-2 text-xs leading-relaxed text-muted"><Lock size={14} className="mt-0.5 flex-none" /> Receitas são dados pessoais sensíveis: ficam em armazenamento protegido, com acesso restrito à equipe técnica, conforme a LGPD. Neste protótipo, nenhum arquivo é enviado.</p>
+              <p className="mt-6 flex gap-2 text-xs leading-relaxed text-muted"><Lock size={14} className="mt-0.5 flex-none" /> Receitas são dados pessoais sensíveis: ficam em armazenamento protegido, com acesso restrito à equipe técnica, conforme a LGPD.</p>
             </section>
           )}
 
@@ -252,7 +251,6 @@ export default function LensFlow({ product: p }: { product: Product }) {
               <span key={total} className="animate-[pop_.4s_cubic-bezier(.22,1,.36,1)] text-[26px] font-bold">{brl(total)}</span>
             </div>
             <p className="text-right text-sm text-muted">ou {inst.n}x de {brl(inst.value)}</p>
-            <p className="mt-4 text-xs text-muted">Preços de lentes e tratamentos demonstrativos — configuráveis no painel.</p>
           </div>
         </aside>
       </div>

@@ -4,12 +4,12 @@ import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Heart, Menu, Search, ShoppingBag, User, X, ChevronRight, ChevronDown, MapPin, CreditCard, Truck, Headset, Lock } from 'lucide-react';
-import { menu, products, storeSettings, brl, finalPrice, type MenuCategory } from '@/lib/data';
+import { menu, products, storeSettings, brl, finalPrice, waLink, type MenuCategory } from '@/lib/data';
 import { cartTotals, useHydrated, useStore } from '@/lib/store';
 import ProductImage from './ProductImage';
 import { WhatsappIcon } from './Social';
 
-const topIcons = [Truck, CreditCard, CreditCard, Headset];
+const topIcons = [Truck, CreditCard, CreditCard, MapPin];
 
 function TopBar() {
   const [i, setI] = useState(0);
@@ -33,8 +33,8 @@ function TopBar() {
             );
           })}
         </ul>
-        <Link href="/#lojas" className="hidden items-center gap-1.5 whitespace-nowrap hover:text-primary lg:flex">
-          <MapPin size={14} className="text-primary" aria-hidden /> Nossas lojas
+        <Link href="/#loja" className="hidden items-center gap-1.5 whitespace-nowrap hover:text-primary lg:flex">
+          <MapPin size={14} className="text-primary" aria-hidden /> Nossa loja
         </Link>
       </div>
     </div>
@@ -168,7 +168,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </ul>
         <div className="space-y-2 border-t border-line p-5">
           <Link href="/conta" onClick={onClose} className="flex items-center gap-2 py-2 font-semibold"><User size={18} /> Entrar ou cadastrar</Link>
-          <Link href="/#atendimento" onClick={onClose} className="flex items-center gap-2 py-2 font-semibold"><WhatsappIcon size={18} /> Atendimento</Link>
+          <a href={waLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2 font-semibold"><WhatsappIcon size={18} /> {storeSettings.phone}</a>
         </div>
       </nav>
     </div>
@@ -217,7 +217,7 @@ export default function Header() {
             {!inCheckout && (
               <>
                 <button className="grid h-11 w-11 place-items-center md:hidden" aria-label="Buscar" onClick={() => setSearchOpen((v) => !v)}><Search size={22} /></button>
-                <a href="#atendimento" className="hidden h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold hover:text-primary lg:flex"><WhatsappIcon size={20} /> Atendimento</a>
+                <a href={waLink()} target="_blank" rel="noopener noreferrer" className="hidden h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold hover:text-primary lg:flex"><WhatsappIcon size={20} /> Atendimento</a>
                 <Link href="/conta" className="hidden h-11 w-11 place-items-center hover:text-primary md:grid" aria-label="Minha conta"><User size={22} /></Link>
                 <Link href="/favoritos" className="relative hidden h-11 w-11 place-items-center hover:text-primary md:grid" aria-label={`Favoritos (${hydrated ? favCount : 0})`}>
                   <Heart size={22} />

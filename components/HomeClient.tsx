@@ -2,14 +2,14 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
-import { EditorialScene } from './Editorial';
+import ProductImage from './ProductImage';
 import { getProduct } from '@/lib/data';
 
 /** Banners do hero — na Fase 2 vêm do painel (Marketing → Banners da homepage). */
 const slides = [
   { eyebrow: 'Uma nova perspectiva', title: 'Elegância em cada olhar.', text: 'Encontre os óculos que traduzem sua personalidade e transforme sua maneira de enxergar o mundo.', primary: { label: 'Comprar agora', href: '/categoria/todos' }, secondary: { label: 'Explorar coleções', href: '/categoria/marcas' }, product: 'giulia', color: 0, tone: 'olive' as const, image: '/campaign/hero-tartaruga.webp', position: '50% 40%' },
   { eyebrow: 'Coleção Solar', title: 'A luz do dia, do seu jeito.', text: 'Proteção UV400 e desenho editorial para acompanhar cada passeio.', primary: { label: 'Ver óculos de sol', href: '/categoria/oculos-de-sol' }, secondary: { label: 'Lançamentos', href: '/categoria/lancamentos' }, product: 'riviera', color: 0, tone: 'olive' as const, image: '/campaign/hero-solar.webp', position: '50% 30%' },
-  { eyebrow: 'Lentes sob medida', title: 'Seu grau, sua armação.', text: 'Escolha a armação, personalize lentes e tratamentos e envie sua receita online.', primary: { label: 'Montar meus óculos', href: '/categoria/lentes' }, secondary: { label: 'Falar com especialista', href: '#atendimento' }, product: 'lorenzo', color: 0, tone: 'olive' as const, image: undefined as string | undefined, position: '' },
+  { eyebrow: 'Lentes sob medida', title: 'Seu grau, sua armação.', text: 'Escolha a armação, personalize lentes e tratamentos e envie sua receita online.', primary: { label: 'Montar meus óculos', href: '/categoria/lentes' }, secondary: { label: 'Falar com especialista', href: '#atendimento' }, product: 'aurora', color: 0, tone: 'olive' as const, image: undefined as string | undefined, position: '' },
 ];
 
 export function Hero() {
@@ -50,7 +50,7 @@ export function Hero() {
           {s.image ? (
             <img key={i} src={s.image} alt="" className="absolute inset-0 h-full w-full animate-[fadeIn_.9s_cubic-bezier(.22,1,.36,1)] object-cover" style={{ objectPosition: s.position }} fetchPriority={i === 0 ? 'high' : 'auto'} />
           ) : (
-            <EditorialScene key={i} product={product} colorIndex={s.color} tone={s.tone} className="absolute inset-0 animate-[fadeIn_.9s_cubic-bezier(.22,1,.36,1)]" />
+            <ProductImage key={i} product={product} eager className="absolute inset-0 animate-[fadeIn_.9s_cubic-bezier(.22,1,.36,1)] [&>img]:!p-[14%]" />
           )}
         </div>
       </div>
@@ -75,7 +75,7 @@ export function Newsletter() {
     return (
       <div className="flex items-center gap-3 rounded-md bg-white/10 p-6" role="status">
         <span className="grid h-10 w-10 flex-none place-items-center rounded-full bg-primary text-ink"><Check size={20} /></span>
-        <p>Cadastro confirmado. Você receberá nossas novidades em <b>{email}</b>. (Demonstração: nenhum dado foi enviado.)</p>
+        <p>Cadastro confirmado. Você receberá nossas novidades em <b>{email}</b>.</p>
       </div>
     );
   return (

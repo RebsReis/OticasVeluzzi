@@ -2,13 +2,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Home, LayoutGrid, Heart, ShoppingBag, User, Clock, MapPin } from 'lucide-react';
-import { InstagramIcon, FacebookIcon, WhatsappIcon } from './Social';
+import { Home, LayoutGrid, Heart, ShoppingBag, User, Phone, MapPin } from 'lucide-react';
+import { InstagramIcon, WhatsappIcon } from './Social';
+import { storeSettings as st, waLink } from '@/lib/data';
 import { cartTotals, useHydrated, useStore } from '@/lib/store';
 
 const cols = [
   { title: 'Produtos', links: [['Óculos de grau', '/categoria/oculos-de-grau'], ['Óculos de sol', '/categoria/oculos-de-sol'], ['Feminino', '/categoria/feminino'], ['Masculino', '/categoria/masculino'], ['Infantil', '/categoria/infantil'], ['Lentes', '/categoria/lentes']] },
-  { title: 'Institucional', links: [['Sobre a Veluzzi', '/#sobre'], ['Nossas lojas', '/#lojas'], ['Trabalhe conosco', '/#sobre']] },
+  { title: 'Institucional', links: [['Sobre a Veluzzi', '/#sobre'], ['Nossa loja', '/#loja'], ['Instagram', 'https://www.instagram.com/oticasveluzzi_vilamatilde']] },
   { title: 'Ajuda', links: [['Minha conta', '/conta'], ['Meus pedidos', '/conta'], ['Trocas e devoluções', '/politicas#trocas'], ['Política de privacidade', '/politicas#privacidade'], ['Termos de uso', '/politicas#termos']] },
 ];
 
@@ -30,9 +31,8 @@ export default function Footer() {
           <Image src="/brand/logo-light.png" alt="Óticas Veluzzi" width={1070} height={324} className="h-12 w-auto" />
           <p className="max-w-xs text-sm leading-relaxed">Elegância em cada olhar. Armações, lentes e atendimento especializado para cuidar da sua visão com estilo.</p>
           <div className="flex gap-2">
-            <a href="#" aria-label="Instagram (link a configurar)" className="grid h-11 w-11 place-items-center rounded-full border border-white/20 hover:border-primary hover:text-primary"><InstagramIcon /></a>
-            <a href="#" aria-label="Facebook (link a configurar)" className="grid h-11 w-11 place-items-center rounded-full border border-white/20 hover:border-primary hover:text-primary"><FacebookIcon /></a>
-            <a href="#atendimento" aria-label="WhatsApp" className="grid h-11 w-11 place-items-center rounded-full border border-white/20 hover:border-primary hover:text-primary"><WhatsappIcon /></a>
+            <a href={st.instagram} target="_blank" rel="noopener noreferrer" aria-label={`Instagram ${st.instagramHandle}`} className="grid h-11 w-11 place-items-center rounded-full border border-white/20 hover:border-primary hover:text-primary"><InstagramIcon /></a>
+            <a href={waLink()} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="grid h-11 w-11 place-items-center rounded-full border border-white/20 hover:border-primary hover:text-primary"><WhatsappIcon /></a>
           </div>
         </div>
         {cols.map((c) => (
@@ -46,8 +46,8 @@ export default function Footer() {
       </div>
 
       <div id="lojas" className="container-v grid gap-8 border-t border-white/10 py-10 text-sm md:grid-cols-3">
-        <div className="flex gap-3"><MapPin size={18} className="mt-0.5 flex-none text-primary" /><div><p className="font-semibold text-white">Lojas físicas</p><p>Endereços a cadastrar no painel administrativo.</p></div></div>
-        <div className="flex gap-3"><Clock size={18} className="mt-0.5 flex-none text-primary" /><div><p className="font-semibold text-white">Horários</p><p>Horários de atendimento a cadastrar no painel.</p></div></div>
+        <div className="flex gap-3"><MapPin size={18} className="mt-0.5 flex-none text-primary" /><div><p className="font-semibold text-white">Nossa loja</p><p>{st.store.street} · {st.store.district}<br />{st.store.city} / {st.store.uf}</p><a href={st.store.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block font-semibold text-primary hover:underline">Como chegar</a></div></div>
+        <div className="flex gap-3"><Phone size={18} className="mt-0.5 flex-none text-primary" /><div><p className="font-semibold text-white">Atendimento</p><a href={waLink()} target="_blank" rel="noopener noreferrer" className="block hover:text-white">WhatsApp {st.phone}</a><a href={st.instagram} target="_blank" rel="noopener noreferrer" className="block hover:text-white">{st.instagramHandle}</a></div></div>
         <div>
           <p className="mb-2 font-semibold text-white">Formas de pagamento</p>
           <ul className="flex flex-wrap gap-1.5">{payments.map((p) => <li key={p} className="rounded-xs border border-white/20 px-2 py-1 text-xs">{p}</li>)}</ul>
@@ -56,8 +56,8 @@ export default function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-v flex flex-col gap-2 py-6 text-xs text-white/60 md:flex-row md:justify-between">
-          <p>© {new Date().getFullYear()} Óticas Veluzzi. Razão social e CNPJ a configurar no painel.</p>
-          <p>Protótipo visual com dados demonstrativos.</p>
+          <p>© {new Date().getFullYear()} Óticas Veluzzi · {st.store.district}, {st.store.city}/{st.store.uf}</p>
+          <p>Elegância em cada olhar.</p>
         </div>
       </div>
     </footer>

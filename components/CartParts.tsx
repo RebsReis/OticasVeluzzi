@@ -81,7 +81,7 @@ export function CouponBox() {
         <input id="cupom" value={v} onChange={(e) => setV(e.target.value)} className="input !h-11 uppercase" placeholder="Digite o código" aria-invalid={!!err} aria-describedby="cupom-msg" />
         <button className="btn btn-outline !min-h-[44px] !px-5">Aplicar</button>
       </div>
-      <p id="cupom-msg" className={`mt-1.5 text-xs ${err ? 'text-error' : 'text-muted'}`}>{err || 'Demonstração: use BEMVINDO10.'}</p>
+      <p id="cupom-msg" className={`mt-1.5 text-xs ${err ? 'text-error' : 'text-muted'}`}>{err}</p>
     </form>
   );
 }
@@ -114,7 +114,6 @@ export function ShippingCalc({ subtotal }: { subtotal: number }) {
           <li className="flex justify-between px-3 py-2.5"><span>Econômico · 6 a 9 dias úteis</span><b>{free ? 'Grátis' : brl(24.9)}</b></li>
           <li className="flex justify-between px-3 py-2.5"><span>Expresso · 2 a 4 dias úteis</span><b>{brl(39.9)}</b></li>
           <li className="flex justify-between px-3 py-2.5"><span>Retirar na loja</span><b>Grátis</b></li>
-          <li className="px-3 py-2 text-xs text-muted">Valores demonstrativos — integração com serviço de frete na Fase 2.</li>
         </ul>
       )}
     </div>
